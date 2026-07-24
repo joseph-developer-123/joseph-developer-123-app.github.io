@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slotboost.io | Stop Losing Revenue to No-Shows</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. CSS RESET & VARIABLES
+           ========================================================================== */
+        :root {
+            /* Color Palette */
+            --color-white: #ffffff;
+            --color-off-white: #f8fafc;
+            --color-gray-100: #f1f5f9;
+            --color-gray-300: #cbd5e1;
+            --color-gray-600: #475569;
+            --color-gray-900: #0f172a;
+            
+            /* The Green Theme */
+            --color-green-light: #d1fae5;
+            --color-green-main: #10b981;
+            --color-green-dark: #059669;
+            --color-green-deep: #064e3b;
+            
+            /* Typography */
+            --font-sans: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            
+            /* Layout & Spacing */
+            --container-width: 1200px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-green: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--color-gray-900);
+            background-color: var(--color-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img, svg {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ==========================================================================
+           2. TYPOGRAPHY & UTILITIES
+           ========================================================================== */
+        h1, h2, h3 {
+            line-height: 1.2;
+            color: var(--color-gray-900);
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .text-green { color: var(--color-green-main); }
+        .text-gray { color: var(--color-gray-600); }
+        
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-green-main);
+            color: var(--color-white);
+            box-shadow: var(--shadow-green);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.5);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--color-green-main);
+            border: 2px solid var(--color-green-main);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--color-green-light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .delay-3 { animation-delay: 0.6s; opacity: 0; }
+
+        /* ==========================================================================
+           3. HEADER & NAVIGATION
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-gray-100);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-green-deep);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--color-green-main);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--color-gray-600);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-green-main);
+        }
+
+        /* ==========================================================================
+           4. HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding: 12rem 0 8rem;
+            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-off-white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Background Elements */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--color-green-light) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .hero-subtitle {
+            display: inline-block;
+            background: var(--color-green-light);
+            color: var(--color-green-deep);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--color-gray-600);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ==========================================================================
+           5. FEATURES / HOW IT WORKS SECTION
+           ========================================================================== */
+        .features {
+            padding: 8rem 0;
+            background-color: var(--color-white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            background: var(--color-off-white);
+            padding: 3rem 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-gray-100);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-green-light);
+        }
+        
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--color-green-main);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--color-green-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--color-green-dark);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ==========================================================================
+           6. ROI / VALUE SECTION
+           ========================================================================== */
+        .roi-section {
+            padding: 8rem 0;
+            background-color: var(--color-green-deep);
+            color: var(--color-white);
+        }
+
+        .roi-container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .roi-content {
+            flex: 1;
+        }
+
+        .roi-content h2 {
+            color: var(--color-white);
+        }
+
+        .roi-content p {
+            color: var(--color-green-light);
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .roi-stats {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item {
+            margin-bottom: 2rem;
+        }
+
+        .stat-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--color-green-main);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--color-white);
+            font-size: 1.1rem;
+        }
+
+        /* ==========================================================================
+           7. WAITLIST SECTION
+           ========================================================================== */
+        .waitlist {
+            padding: 8rem 0;
+            background-color: var(--color-off-white);
+            text-align: center;
+        }
+
+        .waitlist-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--color-white);
+            padding: 4rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-gray-100);
+        }
+
+        .waitlist-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .waitlist-box p {
+            font-size: 1.125rem;
+            color: var(--color-gray-600);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .waitlist-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: var(--transition);
+            background: var(--color-off-white);
+        }
+
+        .waitlist-input:focus {
+            border-color: var(--color-green-main);
+            background: var(--color-white);
+            box-shadow: 0 0 0 4px var(--color-green-light);
+        }
+
+        .waitlist-form .btn {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* ==========================================================================
+           8. FOOTER
+           ========================================================================== */
+        footer {
+            background-color: var(--color-white);
+            padding: 2rem 0;
+            border-top: 1px solid var(--color-gray-100);
+            text-align: center;
+            color: var(--color-gray-600);
+        }
+
+        /* ==========================================================================
+           9. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .roi-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Add a hamburger menu for full mobile implementation */
+            }
+            .hero {
+                padding: 8rem 0 5rem;
+            }
+            .waitlist-form {
+                flex-direction: column;
+            }
+            .waitlist-box {
+                padding: 2rem;
+            }
+            .waitlist-form .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+                Slotboost.io
+            </a>
+            <nav class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#roi">The Value</a>
+                <a href="#waitlist" class="btn btn-outline" style="padding: 0.5rem 1.5rem;">Join Waitlist</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-content">
+            <span class="hero-subtitle animate-up">Built for Aesthetic & Cosmetic Clinics</span>
+            <h1 class="animate-up delay-1">Stop losing revenue to <span class="text-green">no-shows</span> and cancellations.</h1>
+            <p class="animate-up delay-2">Slotboost.io works quietly in the background of your existing booking system. We automatically handle the parts that fall through the cracks—securing appointments properly, reminding patients, and instantly filling slots that open up.</p>
+            <div class="animate-up delay-3">
+                <a href="#waitlist" class="btn btn-primary">Secure Your Early Access</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="how-it-works" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Runs itself. <br>Fills your schedule.</h2>
+                <p class="text-gray">No new software to learn. No configurations to manage. Slotboost is set up once and handles the heavy lifting automatically.</p>
+            </div>
+            
+            <div class="grid-3">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Invisible Integration</h3>
+                    <p class="text-gray">Connects directly to your existing booking systems. Your front-desk staff keeps working exactly as they do today.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Instant Gap Filling</h3>
+                    <p class="text-gray">When a last-minute cancellation occurs, Slotboost immediately contacts matched waitlisted patients to claim the slot.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Secure Appointments</h3>
+                    <p class="text-gray">Automated micro-engagements keep patients committed, drastically reducing the chances they forget or abandon their visit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI SECTION -->
+    <section id="roi" class="roi-section">
+        <div class="container roi-container">
+            <div class="roi-content">
+                <h2>Designed to pay for itself immediately.</h2>
+                <p>Because Slotboost is built specifically for high-value cosmetic and aesthetic practices, the math is simple.</p>
+                <p>If our system recovers just <strong>one or two</strong> missed appointments a month, it has already paid for itself. Everything else is pure profit added back to your bottom line.</p>
+            </div>
+            <div class="roi-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1-2</div>
+                    <div class="stat-label">Recovered appointments per month to achieve 100% ROI.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Hours spent by your staff managing the waitlist.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAITLIST SECTION -->
+    <section id="waitlist" class="waitlist">
+        <div class="container">
+            <div class="waitlist-box">
+                <h2>Be first in line.</h2>
+                <p>Slotboost.io is launching soon for US aesthetic clinics. Join the waitlist to get early access and founding-member pricing.</p>
+                
+                <form class="waitlist-form" onsubmit="event.preventDefault(); alert('Thank you for joining the waitlist!');">
+                    <div class="input-group">
+                        <input type="text" class="waitlist-input" placeholder="Clinic Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" class="waitlist-input" placeholder="Email Address" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Join the Waitlist &rarr;</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Slotboost.io. All rights reserved. Designed for aesthetic excellence.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
